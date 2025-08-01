@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import Navigation from '../../components/Navigation';
+import Navigation from './../components/Navigation';
 import Link from 'next/link';
 
 export default function CouponDetail() {
@@ -15,11 +15,11 @@ export default function CouponDetail() {
   useEffect(() => {
     fetchCoupon();
     fetchRelatedCoupons();
-  }, [params.id]);
+  }, [params.slug]);
 
   const fetchCoupon = async () => {
     try {
-      const response = await fetch(`/api/coupons/${params.id}`);
+      const response = await fetch(`/api/coupons/slug/${params.slug}`);
       if (response.ok) {
         const data = await response.json();
         setCoupon(data);
@@ -38,7 +38,7 @@ export default function CouponDetail() {
         const data = await response.json();
         // Filter related coupons (same category, excluding current coupon)
         const related = data
-          .filter(c => c._id !== params.id)
+          .filter(c => c.slug !== params.slug)
           .slice(0, 5);
         setRelatedCoupons(related);
       }
@@ -66,7 +66,7 @@ export default function CouponDetail() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="bg-gray-50">
         <Navigation />
         <div className="flex items-center justify-center h-64">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500"></div>
@@ -77,13 +77,13 @@ export default function CouponDetail() {
 
   if (!coupon) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="bg-gray-50">
         <Navigation />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="text-center">
             <h1 className="text-2xl font-bold text-gray-900">Coupon not found</h1>
             <p className="mt-2 text-gray-600">The coupon you're looking for doesn't exist.</p>
-            <Link href="/all-coupons" className="mt-4 inline-block text-blue-600 hover:text-blue-800">
+            <Link href="/" className="mt-4 inline-block text-blue-600 hover:text-blue-800">
               Browse all coupons →
             </Link>
           </div>
@@ -93,7 +93,7 @@ export default function CouponDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="bg-gray-50">
       <Navigation />
       
       {/* Main Content */}
@@ -111,7 +111,7 @@ export default function CouponDetail() {
                   <span className="mx-2">/</span>
                 </li>
                 <li>
-                  <Link href="/all-coupons" className="hover:text-gray-700">All Coupons</Link>
+                  <Link href="/" className="hover:text-gray-700">All Coupons</Link>
                 </li>
                 <li>
                   <span className="mx-2">/</span>
@@ -217,11 +217,11 @@ export default function CouponDetail() {
                 <h3 className="text-xl font-bold text-gray-900 mb-4">Related Coupons</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {relatedCoupons.map((relatedCoupon) => (
-                    <Link
-                      key={relatedCoupon._id}
-                      href={`/coupon/${relatedCoupon._id}`}
-                      className="block bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors duration-200"
-                    >
+                                             <Link
+                           key={relatedCoupon._id}
+                           href={`/${relatedCoupon.slug}`}
+                           className="block bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors duration-200"
+                         >
                       <div className="flex items-start space-x-3">
                         <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-lg flex items-center justify-center">
                           {relatedCoupon.image ? (
@@ -281,7 +281,7 @@ export default function CouponDetail() {
                 </div>
               </div>
               <Link
-                href={`/all-coupons?search=${encodeURIComponent(searchTerm)}`}
+                href={`/?search=${encodeURIComponent(searchTerm)}`}
                 className="mt-3 inline-block w-full text-center bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
               >
                 Search
@@ -294,7 +294,7 @@ export default function CouponDetail() {
               <div className="space-y-4">
                 {relatedCoupons.slice(0, 3).map((featuredCoupon) => (
                   <div key={featuredCoupon._id} className="border-b border-gray-100 pb-4 last:border-b-0">
-                    <Link href={`/coupon/${featuredCoupon._id}`} className="block hover:bg-gray-50 rounded-lg p-2 -m-2">
+                    <Link href={`/${featuredCoupon.slug}`} className="block hover:bg-gray-50 rounded-lg p-2 -m-2">
                       <div className="flex items-start space-x-3">
                         <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-lg flex items-center justify-center">
                           {featuredCoupon.image ? (
@@ -338,7 +338,7 @@ export default function CouponDetail() {
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
               <div className="space-y-3">
                 <Link
-                  href="/all-coupons"
+                  href="/"
                   className="block w-full text-center bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
                 >
                   Browse All Coupons

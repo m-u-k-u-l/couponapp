@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '../../../../lib/db';
 import { ObjectId } from 'mongodb';
+import { generateUniqueSlug } from '../../../../lib/utils';
 
 // GET - Get a specific coupon
 export async function GET(request, { params }) {
@@ -42,6 +43,7 @@ export async function PUT(request, { params }) {
     const { id } = params;
     const {
       title,
+      slug,
       image,
       description,
       couponCode,
@@ -82,9 +84,13 @@ export async function PUT(request, { params }) {
       );
     }
 
+    // Generate unique slug from title (or use provided slug, excluding current coupon)
+    const finalSlug = slug ? await generateUniqueSlug(slug, db, new ObjectId(id)) : await generateUniqueSlug(title, db, new ObjectId(id));
+
     // Update coupon
     const updateData = {
       title,
+      slug: finalSlug,
       image: image || '',
       description: description || '',
       couponCode,

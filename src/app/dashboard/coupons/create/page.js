@@ -11,6 +11,7 @@ export default function CreateCoupon() {
   const router = useRouter();
   const [formData, setFormData] = useState({
     title: '',
+    slug: '',
     image: '',
     description: '',
     couponCode: '',
@@ -41,6 +42,21 @@ export default function CreateCoupon() {
       ...prev,
       [name]: value
     }));
+    
+    // Auto-generate slug from title
+    if (name === 'title') {
+      const slug = value
+        .toLowerCase()
+        .trim()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-+|-+$/g, '');
+      setFormData(prev => ({
+        ...prev,
+        slug
+      }));
+    }
   };
 
   const handleImageUpload = (imageUrl) => {
@@ -124,6 +140,25 @@ export default function CreateCoupon() {
                     className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Enter coupon title"
                   />
+                </div>
+
+                {/* Slug */}
+                <div className="sm:col-span-2">
+                  <label htmlFor="slug" className="block text-sm font-medium text-gray-700">
+                    URL Slug
+                  </label>
+                  <input
+                    type="text"
+                    id="slug"
+                    name="slug"
+                    value={formData.slug}
+                    onChange={handleChange}
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="auto-generated-slug"
+                  />
+                  <p className="mt-1 text-sm text-gray-500">
+                    This will be used in the URL. Auto-generated from the title, but you can edit it.
+                  </p>
                 </div>
 
                 {/* Image Upload */}

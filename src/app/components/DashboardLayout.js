@@ -9,7 +9,7 @@ export default function DashboardLayout({ children }) {
   const { logout } = useAuth();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="bg-gray-50">
       {/* Sidebar */}
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 

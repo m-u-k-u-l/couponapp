@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '../../../lib/db';
+import { generateUniqueSlug } from '../../../lib/utils';
 
 // GET - List all coupons
 export async function GET() {
@@ -27,6 +28,7 @@ export async function POST(request) {
   try {
     const {
       title,
+      slug,
       image,
       description,
       couponCode,
@@ -56,9 +58,13 @@ export async function POST(request) {
       );
     }
 
+    // Generate unique slug from title (or use provided slug)
+    const finalSlug = slug ? await generateUniqueSlug(slug, db) : await generateUniqueSlug(title, db);
+
     // Create new coupon
     const newCoupon = {
       title,
+      slug: finalSlug,
       image: image || '',
       description: description || '',
       couponCode,

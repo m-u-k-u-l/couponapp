@@ -8,7 +8,7 @@ export default function Home() {
   const { user } = useAuth();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="bg-gradient-to-br from-blue-50 to-indigo-100">
       <Navigation />
       {/* Hero Section */}
       <div className="relative overflow-hidden">

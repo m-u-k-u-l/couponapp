@@ -20,7 +20,7 @@ export default function Navigation() {
             {/* <Link href="/" className="text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium">
               Home
             </Link>
-            <Link href="/all-coupons" className="text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium">
+            <Link href="/" className="text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium">
               All Coupons
             </Link> */}
 
