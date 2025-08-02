@@ -13,15 +13,11 @@ export default function AllCoupons() {
 
   const categories = [
     'All',
-    'Electronics',
-    'Fashion',
-    'Food & Dining',
-    'Travel',
-    'Health & Beauty',
-    'Home & Garden',
-    'Sports',
-    'Books',
-    'Gaming'
+    'Online',
+    'Offline',
+    'JEE',
+    'NEET',
+    'IIT'
   ];
 
   useEffect(() => {
@@ -56,8 +52,8 @@ export default function AllCoupons() {
 
   const filteredCoupons = coupons.filter(coupon => {
     const matchesSearch = coupon.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         coupon.couponCode.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         coupon.category.toLowerCase().includes(searchTerm.toLowerCase());
+      coupon.couponCode.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      coupon.category.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'All' || coupon.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
@@ -84,13 +80,13 @@ export default function AllCoupons() {
   return (
     <div className="bg-gray-50">
       <Navigation />
-      
+
       {/* Hero Banner */}
       <div className="bg-gradient-to-r from-blue-600 to-purple-700 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Discover Amazing Deals
+              Couponwala
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-blue-100">
               Save money with the best coupons and discount codes
@@ -123,11 +119,10 @@ export default function AllCoupons() {
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                  selectedCategory === category
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${selectedCategory === category
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
               >
                 {category}
               </button>
@@ -166,26 +161,26 @@ export default function AllCoupons() {
                     <div className="relative h-48 bg-gradient-to-br from-blue-50 to-indigo-100">
                       {coupon.image ? (
                         <Link
-                        href={`/${coupon.slug}`}
-                        className="text-blue-600 hover:text-blue-800 font-medium"
-                      >
-                        <img
-                          src={coupon.image}
-                          alt={coupon.title}
-                          className="w-full h-full object-cover"
-                        />
-                        </Link>
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <Link
                           href={`/${coupon.slug}`}
                           className="text-blue-600 hover:text-blue-800 font-medium"
                         >
-                          <svg className="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <img
+                            src={coupon.image}
+                            alt={coupon.title}
+                            className="w-full h-full object-cover"
+                          />
+                        </Link>
+                      ) : (
+
+                        <Link
+                          href={`/${coupon.slug}`}
+                          className="text-blue-600 hover:text-blue-800 font-medium"
+                        >
+                          <div className="w-full h-full flex items-center justify-center"></div>
+                          {/* <svg className="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                          </svg>
-                          </Link>
-                        </div>
+                          </svg> */}
+                        </Link>
                       )}
                       <div className="absolute top-3 left-3">
                         <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
@@ -196,13 +191,13 @@ export default function AllCoupons() {
 
                     {/* Coupon Content */}
                     <div className="p-6">
-                    <Link
-                          href={`/${coupon.slug}`}
-                          className="text-blue-600 hover:text-blue-800 font-medium"
-                        >
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
-                        {coupon.title}
-                      </h3>
+                      <Link
+                        href={`/${coupon.slug}`}
+                        className="text-blue-600 hover:text-blue-800 font-medium"
+                      >
+                        <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
+                          {coupon.title}
+                        </h3>
                       </Link>
                       {coupon.offerTagline && (
                         <p className="text-sm text-gray-600 mb-4 line-clamp-2">
@@ -255,15 +250,17 @@ export default function AllCoupons() {
               <div className="space-y-4">
                 {popularCoupons.map((coupon) => (
                   <div key={coupon._id} className="border-b border-gray-100 pb-4 last:border-b-0">
-                                         <Link href={`/${coupon.slug}`} className="block hover:bg-gray-50 rounded-lg p-2 -m-2">
+                    <Link href={`/${coupon.slug}`} className="block hover:bg-gray-50 rounded-lg p-2 -m-2">
                       <div className="flex items-start space-x-3">
                         <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-lg flex items-center justify-center">
                           {coupon.image ? (
                             <img src={coupon.image} alt={coupon.title} className="w-full h-full object-cover rounded-lg" />
                           ) : (
-                            <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <>
+                              {/* <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                            </svg>
+                            </svg> */}
+                            </>
                           )}
                         </div>
                         <div className="flex-1 min-w-0">
@@ -302,11 +299,10 @@ export default function AllCoupons() {
                   <button
                     key={category}
                     onClick={() => setSelectedCategory(category)}
-                    className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
-                      selectedCategory === category
-                        ? 'bg-blue-50 text-blue-700 font-medium'
-                        : 'text-gray-600 hover:bg-gray-50'
-                    }`}
+                    className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${selectedCategory === category
+                      ? 'bg-blue-50 text-blue-700 font-medium'
+                      : 'text-gray-600 hover:bg-gray-50'
+                      }`}
                   >
                     {category}
                   </button>

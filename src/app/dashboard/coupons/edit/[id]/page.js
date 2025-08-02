@@ -26,16 +26,12 @@ export default function EditCoupon() {
   const [error, setError] = useState('');
 
   const categories = [
-    'Electronics',
-    'Fashion',
-    'Food & Dining',
-    'Travel',
-    'Health & Beauty',
-    'Home & Garden',
-    'Sports',
-    'Books',
-    'Gaming',
-    'Other'
+    'All',
+    'Online',
+    'Offline',
+    'JEE',
+    'NEET',
+    'IIT'
   ];
 
   useEffect(() => {
