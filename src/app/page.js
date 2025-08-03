@@ -86,7 +86,7 @@ export default function AllCoupons() {
 
       {/* Notification for copy success */}
       {copySuccess && (
-        <div className="fixed top-6 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-2 rounded shadow-lg z-50 transition-all">
+        <div className="fixed top-6 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-2 md:px-6 md:py-2 text-sm md:text-base max-w-[90%] rounded shadow-lg z-50 transition-all">
           Coupon code copied!
         </div>
       )}
