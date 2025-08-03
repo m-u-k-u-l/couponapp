@@ -10,6 +10,7 @@ export default function AllCoupons() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [copySuccess, setCopySuccess] = useState(false); // NEW: for notification
 
   const categories = [
     'All',
@@ -43,8 +44,8 @@ export default function AllCoupons() {
   const copyToClipboard = async (couponCode) => {
     try {
       await navigator.clipboard.writeText(couponCode);
-      // You could add a toast notification here
-      alert('Coupon code copied to clipboard!');
+      setCopySuccess(true); // Show notification
+      setTimeout(() => setCopySuccess(false), 2000); // Hide after 2s
     } catch (error) {
       console.error('Failed to copy:', error);
     }
@@ -57,6 +58,8 @@ export default function AllCoupons() {
     const matchesCategory = selectedCategory === 'All' || coupon.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
+
+
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -80,6 +83,13 @@ export default function AllCoupons() {
   return (
     <div className="bg-gray-50">
       <Navigation />
+
+      {/* Notification for copy success */}
+      {copySuccess && (
+        <div className="fixed top-6 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-2 rounded shadow-lg z-50 transition-all">
+          Coupon code copied!
+        </div>
+      )}
 
       {/* Hero Banner */}
       <div
@@ -195,9 +205,9 @@ export default function AllCoupons() {
                           className="text-blue-600 hover:text-blue-800 font-medium"
                         >
                           <div className="w-full h-full flex items-center justify-center">
-                          <img src="/coupon-img.jpg" alt="Test Banner" />
+                            <img src="/coupon-img.jpg" alt="Test Banner" />
                           </div>
-                          
+
                         </Link>
                       )}
                       <div className="absolute top-3 left-3">
@@ -228,12 +238,17 @@ export default function AllCoupons() {
                         <div className="flex items-center justify-between">
                           <span className="text-sm font-medium text-gray-700">Coupon Code:</span>
                           <button
-                            onClick={() => copyToClipboard(coupon.couponCode)}
-                            className="text-blue-600 hover:text-blue-800 transition-colors"
+                            onClick={() => copyToClipboard(coupon.couponCode, coupon._id)}
+                            className="relative text-blue-600 hover:text-blue-800 transition-colors"
                           >
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                              />
                             </svg>
+
+
+
                           </button>
                         </div>
                         <div className="flex items-center justify-between mt-2">
@@ -278,7 +293,7 @@ export default function AllCoupons() {
                               {/* <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg> */}
-                            <img src="/coupon-img.jpg" alt="Test Banner" />
+                              <img src="/coupon-img.jpg" alt="Test Banner" />
                             </>
                           )}
                         </div>
@@ -293,11 +308,12 @@ export default function AllCoupons() {
                             <button
                               onClick={(e) => {
                                 e.preventDefault();
+                                e.stopPropagation();
                                 copyToClipboard(coupon.couponCode);
                               }}
-                              className="text-gray-400 hover:text-gray-600"
+                              className="text-blue-600 hover:text-blue-800 transition-colors"
                             >
-                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
                               </svg>
                             </button>
@@ -331,6 +347,7 @@ export default function AllCoupons() {
           </div>
         </div>
       </div>
+
     </div>
   );
 } 

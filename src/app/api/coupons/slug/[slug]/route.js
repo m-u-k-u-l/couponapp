@@ -1,11 +1,14 @@
+// ⚠️ This MUST be the very first line in the file
+export const runtime = 'nodejs';
+
 import { NextResponse } from 'next/server';
 import { getDb } from '../../../../../lib/db';
 
-// GET - Get a specific coupon by slug
-export async function GET(request, { params }) {
+export async function GET(request, context) {
   try {
-    const { slug } = params;
-    
+    // ✅ This will work reliably even if runtime is still edge
+    const { slug } = await context.params;
+
     if (!slug) {
       return NextResponse.json(
         { error: 'Slug is required' },
@@ -15,9 +18,9 @@ export async function GET(request, { params }) {
 
     const db = await getDb();
     const couponsCollection = db.collection('coupons');
-    
+
     const coupon = await couponsCollection.findOne({ slug });
-    
+
     if (!coupon) {
       return NextResponse.json(
         { error: 'Coupon not found' },
@@ -33,4 +36,4 @@ export async function GET(request, { params }) {
       { status: 500 }
     );
   }
-} 
+}
