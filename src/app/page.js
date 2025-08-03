@@ -82,27 +82,44 @@ export default function AllCoupons() {
       <Navigation />
 
       {/* Hero Banner */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-700 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+      <div
+        className="relative bg-cover bg-center bg-no-repeat min-h-[600px] text-white"
+        style={{ backgroundImage: "url('/hero-banner.jpg')" }}
+      >
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-black/60 backdrop-brightness-75" />
+
+        {/* Content */}
+        <div className="relative z-10 min-h-[600px] px-4 sm:px-6 lg:px-8 py-12 flex items-center justify-center">
+          <div className="text-center max-w-4xl mx-auto">
+            <h1 className="text-4xl md:text-6xl font-extrabold mb-6 drop-shadow-lg">
               Couponwala
             </h1>
-            <p className="text-xl md:text-2xl mb-8 text-blue-100">
+            <p className="text-xl md:text-2xl mb-8 text-gray-200 drop-shadow-md">
               Save money with the best coupons and discount codes
             </p>
             <div className="max-w-2xl mx-auto">
               <div className="relative">
                 <input
                   type="text"
-                  placeholder="Search for coupons, stores, or categories..."
+                  placeholder="Search for coupons or categories..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full px-6 py-4 text-lg text-gray-900 rounded-full shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-300"
+                  className="w-full px-6 py-4 text-lg text-gray-900 rounded-full shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-300"
                 />
                 <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
-                  <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  <svg
+                    className="w-8 h-8 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
                   </svg>
                 </div>
               </div>
@@ -110,6 +127,7 @@ export default function AllCoupons() {
           </div>
         </div>
       </div>
+
 
       {/* Category Filter */}
       <div className="bg-white border-b">
@@ -176,10 +194,10 @@ export default function AllCoupons() {
                           href={`/${coupon.slug}`}
                           className="text-blue-600 hover:text-blue-800 font-medium"
                         >
-                          <div className="w-full h-full flex items-center justify-center"></div>
-                          {/* <svg className="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                          </svg> */}
+                          <div className="w-full h-full flex items-center justify-center">
+                          <img src="/coupon-img.jpg" alt="Test Banner" />
+                          </div>
+                          
                         </Link>
                       )}
                       <div className="absolute top-3 left-3">
@@ -260,6 +278,7 @@ export default function AllCoupons() {
                               {/* <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg> */}
+                            <img src="/coupon-img.jpg" alt="Test Banner" />
                             </>
                           )}
                         </div>
